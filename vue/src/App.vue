@@ -10,7 +10,7 @@
     <div style="display: flex">
       <!-- 侧边栏导航 -->
       <div style="width: 200px; min-height: calc(100vh - 62px); overflow: hidden; margin-right: 2px; background-color: white">
-        <el-menu :default-active="$route.path" :default-openeds="['/']" router class="el-menu-demo">
+        <el-menu :default-active="$route.path" :default-openeds="['/']" router class="el-menu-demo" >
           <el-menu-item index="/">
             <i class="el-icon-eleme"></i>
             <span>首页</span>
