@@ -2,27 +2,25 @@
   <div>
     <!--    搜索表单-->
     <div style="margin-bottom: 20px">
-      <el-input style="width: 240px" placeholder="请输入名称" v-model="params.name"></el-input>
+      <el-input style="width: 240px" placeholder="请输入用户名" v-model="params.username"></el-input>
       <el-input style="width: 240px; margin-left: 5px" placeholder="请输入联系方式" v-model="params.phone"></el-input>
+      <el-input style="width: 240px; margin-left: 5px" placeholder="请输入邮箱" v-model="params.email"></el-input>
       <el-button style="margin-left: 5px" type="primary" @click="load"><i class="el-icon-search"></i> 搜索</el-button>
       <el-button style="margin-left: 5px" type="warning" @click="reset"><i class="el-icon-refresh"></i> 重置</el-button>
     </div>
 
     <el-table :data="tableData" stripe>
       <el-table-column prop="id" label="编号" width="80"></el-table-column>
-      <el-table-column prop="username" label="会员卡号"></el-table-column>
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="phone" label="联系方式"></el-table-column>
-      <el-table-column prop="sex" label="性别"></el-table-column>
+      <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="createtime" label="创建时间"></el-table-column>
       <el-table-column prop="updatetime" label="更新时间"></el-table-column>
 
       <el-table-column label="操作">
         <template v-slot="scope">
 <!--          scope.row 就是当前行数据-->
-          <el-button type="primary" @click="$router.push('/editUser?id=' + scope.row.id)">编辑</el-button>
+          <el-button type="primary" @click="$router.push('/editAdmin?id=' + scope.row.id)">编辑</el-button>
           <el-popconfirm
               style="margin-left: 5px"
               title="您确定删除这行数据吗？"
@@ -60,8 +58,9 @@ export default {
       params: {
         pageNum: 1,
         pageSize: 10,
-        name: '',
-        phone: ''
+        username: '',
+        phone: '',
+        email: ''
       }
     }
   },
@@ -70,12 +69,7 @@ export default {
   },
   methods: {
     load() {
-      // fetch('http://localhost:9090/user/list').then(res => res.json()).then(res => {
-      //   console.log(res)
-      //   this.tableData = res
-      // })
-
-      request.get('/user/page', {
+      request.get('/admin/page', {
         params: this.params
       }).then(res => {
         if (res.code === '200') {
@@ -88,8 +82,9 @@ export default {
       this.params = {
         pageNum: 1,
         pageSize: 10,
-        name: '',
-        phone: ''
+        username: '',
+        phone: '',
+        email: ''
       }
       this.load()
     },
@@ -99,7 +94,7 @@ export default {
       this.load()
     },
     del(id) {
-      request.delete("/user/delete/" + id).then(res => {
+      request.delete("/admin/delete/" + id).then(res => {
         if (res.code === '200') {
           this.$notify.success('删除成功')
           this.load()
