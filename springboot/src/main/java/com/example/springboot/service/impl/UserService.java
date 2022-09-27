@@ -2,6 +2,7 @@ package com.example.springboot.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
+import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.UserPageRequest;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.UserMapper;
@@ -26,9 +27,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Object page(UserPageRequest userPageRequest) {
-        PageHelper.startPage(userPageRequest.getPageNum(), userPageRequest.getPageSize());
-        List<User> users = userMapper.listByCondition(userPageRequest);
+    public PageInfo<User> page(BaseRequest baseRequest) {
+        PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
+        List<User> users = userMapper.listByCondition(baseRequest);
         return new PageInfo<>(users);
     }
 
@@ -36,7 +37,7 @@ public class UserService implements IUserService {
     public void save(User user) {
         Date date = new Date();
         // 当做卡号来处理
-        user.setUsername(DateUtil.format(date, "yyyyMMdd") + IdUtil.fastSimpleUUID());
+        user.setUsername(DateUtil.format(date, "yyyyMMdd") + Math.abs(IdUtil.fastSimpleUUID().hashCode()));
         userMapper.save(user);
     }
 
