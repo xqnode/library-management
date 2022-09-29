@@ -41,4 +41,8 @@
         select * from admin where id = #{id}
     </select>
 
+    <select id="getByUsernameAndPassword" resultType="com.example.springboot.entity.Admin">
+        select * from admin where username = #{username} and password = #{password}
+    </select>
+
 </mapper>
