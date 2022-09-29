@@ -40,7 +40,7 @@ export default {
       request.put('/admin/update', this.form).then(res => {
         if (res.code === '200') {
           this.$notify.success('更新成功')
-          this.$router.push("/admin")
+          this.$router.push("/adminList")
         } else {
           this.$notify.error(res.msg)
         }
