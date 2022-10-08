@@ -1,10 +1,10 @@
 package com.example.springboot.service.impl;
 
-import com.example.springboot.common.Result;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.LoginRequest;
-import com.example.springboot.entity.Admin;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.AdminMapper;
@@ -26,6 +26,9 @@ public class AdminService implements IAdminService {
     @Autowired
     AdminMapper adminMapper;
 
+    private static final String DEFAULT_PASS = "123";
+    private static final String PASS_SALT = "qingge";
+
     @Override
     public List<Admin> list() {
         return adminMapper.list();
@@ -40,6 +43,11 @@ public class AdminService implements IAdminService {
 
     @Override
     public void save(Admin obj) {
+        // 默认密码 123
+        if (StrUtil.isBlank(obj.getPassword())) {
+            obj.setPassword(DEFAULT_PASS);
+        }
+        obj.setPassword(securePass(obj.getPassword()));  // 设置md5加密，加盐
         adminMapper.save(obj);
     }
 
@@ -61,6 +69,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public LoginDTO login(LoginRequest request) {
+        request.setPassword(securePass(request.getPassword()));
         Admin admin = adminMapper.getByUsernameAndPassword(request);
         if (admin == null) {
             throw new ServiceException("用户名或密码错误");
@@ -68,6 +77,10 @@ public class AdminService implements IAdminService {
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
         return loginDTO;
+    }
+
+    private String securePass(String password) {
+        return SecureUtil.md5(password + PASS_SALT);
     }
 
 }

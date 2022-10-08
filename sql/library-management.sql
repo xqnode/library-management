@@ -11,11 +11,31 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 26/09/2022 22:31:47
+ Date: 08/10/2022 22:40:19
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户名',
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '联系方式',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `createtime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `updatetime` datetime(0) NULL DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '密码',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES (1, 'admin', '13988997788', NULL, '2022-10-08 22:21:26', NULL, '77e3b13fb300c6f66e1e2568313c812a');
 
 -- ----------------------------
 -- Table structure for user
@@ -32,25 +52,17 @@ CREATE TABLE `user`  (
   `createtime` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updatetime` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (2, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (3, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (4, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (5, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (6, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (7, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (8, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (9, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (10, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (14, '张三', 'zhang', 20, '男', '13988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (15, '张三', 'zhang', 20, '男', '15988997799', '合肥', NULL, NULL);
-INSERT INTO `user` VALUES (16, '李四', 'lisi', 25, '男', '13988990099', '北京', NULL, NULL);
-INSERT INTO `user` VALUES (17, '李四', 'lisi', 25, '男', '13988990099', '北京', NULL, NULL);
-INSERT INTO `user` VALUES (18, '小红12', '20220926c01925d267964446a11f9f097fae0965', 21, '女', '13988776655', '南京', '2022-09-26 19:49:32', '2022-09-26 20:18:29');
+INSERT INTO `user` VALUES (19, '王二文案', '202209271239528742', 29, '男', '13988990099', '合肥', '2022-09-27 22:10:36', NULL);
+INSERT INTO `user` VALUES (20, '李芸', '20220927-2094581083', 24, '女', '138999009988', '合肥', '2022-09-27 22:16:03', NULL);
+INSERT INTO `user` VALUES (21, '测试', '202209271018800687', 20, NULL, NULL, NULL, '2022-09-27 22:17:06', NULL);
+INSERT INTO `user` VALUES (22, '222', '202209271213716465', 22, '男', '13988990066', NULL, '2022-09-27 22:34:48', NULL);
+INSERT INTO `user` VALUES (23, '333', '20220927688792394', 33, '男', '13977889988', NULL, '2022-09-27 22:35:35', '2022-09-27 22:36:53');
+INSERT INTO `user` VALUES (24, 'admin44', '20221008668708986', 22, '男', '13988998899', '合肥', '2022-10-08 22:13:32', NULL);
+INSERT INTO `user` VALUES (25, 'admin55', '202210081655484819', 16, '男', '13988007799', '合肥', '2022-10-08 22:14:02', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

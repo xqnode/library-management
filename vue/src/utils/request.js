@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from "@/router";
+import Cookies from 'js-cookie'
 
 const request = axios.create({
     baseURL: 'http://localhost:9090',
@@ -11,6 +13,10 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
+    const user = Cookies.get('admin')
+    if (!user) {
+        router.push('/login')
+    }
     // config.headers['token'] = user.token;  // 设置请求头
     return config
 }, error => {

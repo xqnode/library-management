@@ -1,9 +1,21 @@
 <template>
   <div>
     <!-- 头部区域 -->
-    <div style="height: 60px; line-height: 60px; background-color: white; margin-bottom: 2px">
-      <img src="@/assets/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
-      <span style="margin-left: 25px; font-size: 24px">图书管理系统</span>
+    <div style="height: 60px; line-height: 60px; background-color: white; margin-bottom: 2px; display: flex">
+      <div style="width: 300px">
+        <img src="@/assets/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
+        <span style="margin-left: 25px; font-size: 24px">图书管理系统</span>
+      </div>
+      <div style="flex: 1; text-align: right; padding-right: 20px">
+        <el-dropdown size="medium">
+          <span class="el-dropdown-link" style="cursor: pointer">
+            {{ admin.username }}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown" style="margin-top: -5px">
+            <el-dropdown-item><div style="width: 50px; text-align: center;" @click="logout">退出</div></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
 
     <!-- 侧边栏和主体 -->
@@ -43,8 +55,22 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
+
 export default {
-  name: "Layout.vue"
+  name: "Layout.vue",
+  data() {
+    return {
+      admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {}
+    }
+  },
+  methods: {
+    logout() {
+      // 清除浏览器用户数据
+      Cookies.remove('admin')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 
