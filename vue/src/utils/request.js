@@ -3,7 +3,7 @@ import router from "@/router";
 import Cookies from 'js-cookie'
 
 const request = axios.create({
-    baseURL: 'http://localhost:9090',
+    baseURL: 'http://localhost:9090/api',
     timeout: 5000
 })
 
@@ -13,11 +13,11 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
-    const user = Cookies.get('admin')
-    if (!user) {
-        router.push('/login')
+    const adminJson = Cookies.get('admin')
+    if (adminJson) {
+        // 设置请求头
+        config.headers['token'] = JSON.parse(adminJson).token
     }
-    // config.headers['token'] = user.token;  // 设置请求头
     return config
 }, error => {
     return Promise.reject(error)
@@ -31,6 +31,9 @@ request.interceptors.response.use(
         // 兼容服务端返回的字符串数据
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
+        }
+        if (res.code === '401') {
+            router.push('/login')
         }
         return res;
     },

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../views/Layout.vue'
+import Cookies from "js-cookie";
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,10 @@ const routes = [
         component: () => import('@/views/admin/Edit.vue'),
       },
     ]
+  },
+  {
+    path: "*",
+    component:() => import('@/views/404')
   }
 ]
 
@@ -63,6 +68,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') next()
+  const admin = Cookies.get("admin")
+  if (!admin && to.path !== '/login') return next("/login")  // 强制退回到登录页面
+  // 访问 /home 的时候，并且cookie里面存在数据，这个时候我就直接放行
+  next()
 })
 
 export default router
