@@ -10,7 +10,11 @@
     </insert>
 
     <update id="updateById">
-        update admin set username = #{username}, phone = #{phone}, email = #{email}, updatetime = #{updatetime} where id = #{id}
+        update admin set username = #{username}, phone = #{phone}, email = #{email}, updatetime = #{updatetime}, status = #{status} where id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        update admin set password = #{newPass} where username = #{username} and password = #{password}
     </update>
 
     <delete id="deleteById">

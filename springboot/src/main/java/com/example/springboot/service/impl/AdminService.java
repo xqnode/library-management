@@ -5,6 +5,7 @@ import cn.hutool.crypto.SecureUtil;
 import com.example.springboot.controller.dto.LoginDTO;
 import com.example.springboot.controller.request.BaseRequest;
 import com.example.springboot.controller.request.LoginRequest;
+import com.example.springboot.controller.request.PasswordRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.exception.ServiceException;
 import com.example.springboot.mapper.AdminMapper;
@@ -71,9 +72,12 @@ public class AdminService implements IAdminService {
     @Override
     public LoginDTO login(LoginRequest request) {
         request.setPassword(securePass(request.getPassword()));
-        Admin admin = adminMapper.getByUsernameAndPassword(request);
+        Admin admin = adminMapper.getByUsernameAndPassword(request.getUsername(), request.getPassword());
         if (admin == null) {
             throw new ServiceException("用户名或密码错误");
+        }
+        if (!admin.isStatus()) {
+            throw new ServiceException("当前用户处于禁用状态，请联系管理员");
         }
         LoginDTO loginDTO = new LoginDTO();
         BeanUtils.copyProperties(admin, loginDTO);
@@ -82,6 +86,16 @@ public class AdminService implements IAdminService {
         String token = TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword());
         loginDTO.setToken(token);
         return loginDTO;
+    }
+
+    @Override
+    public void changePass(PasswordRequest request) {
+        // 注意 你要对新的密码进行加密
+        request.setNewPass(securePass(request.getNewPass()));
+        int count = adminMapper.updatePassword(request);
+        if (count <= 0) {
+            throw new ServiceException("修改密码失败");
+        }
     }
 
     private String securePass(String password) {
