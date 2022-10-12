@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="com.example.springboot.entity.Category">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="remark" property="remark" />
+        <result column="pid" property="pid" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+        <collection property="children" ofType="com.example.springboot.entity.Category" column="{id=id, name1=queryName}" select="selectByPid" />
+    </resultMap>
+
+<!--    { name1=queryName }  前面的name1是子集待使用的参数名称， queryName是父级传给子集的属性，queryName必须是父级的一个查询属性，
+    也就是把 queryName赋值给了name1，然后使用 -->
+
+    <select id="selectByPid" resultType="com.example.springboot.entity.Category">
+        select * from category where pid = #{id}
+        <if test="name1 != null and name1 != ''">
+            and name like concat('%', #{name1}, '%')
+        </if>
+        order by id desc
+    </select>
+
+    <select id="listByCondition" resultMap="categoryMap">
+        select c1.*,'${name}' as queryName from category c1
+        left join category c2
+        on c1.id = c2.pid
+        <where>
+            isnull(c1.pid)
+            <if test="name != null and name != ''">
+               and (c1.name like concat('%', #{name}, '%') or c2.name like concat('%', #{name}, '%'))
+            </if>
+        </where>
+        group by c1.id
+        order by c1.id desc
+    </select>
+
+    <insert id="save">
+        insert into category(name, remark, pid) values(#{name}, #{remark}, #{pid})
+    </insert>
+
+    <update id="updateById">
+        update category set name = #{name}, remark = #{remark}, updatetime = #{updatetime} where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from category where id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.example.springboot.entity.Category">
+        select * from category order by id desc
+    </select>
+
+    <select id="getById" resultType="com.example.springboot.entity.Category">
+        select * from category where id = #{id}
+    </select>
+</mapper>
