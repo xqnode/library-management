@@ -59,7 +59,11 @@ const routes = [
       //  ====  Category  ====
       { path: 'categoryList', name: 'CategoryList', component: () => import('@/views/category/List.vue') },
       { path: 'addCategory', name: 'AddCategory', component: () => import('@/views/category/Add.vue') },
-      { path: 'editCategory', name: 'EditCategory', component: () => import('@/views/category/Edit.vue') }
+      { path: 'editCategory', name: 'EditCategory', component: () => import('@/views/category/Edit.vue') },
+      //  ====  Book  ====
+      { path: 'bookList', name: 'CategoryList', component: () => import('@/views/book/List.vue') },
+      { path: 'addBook', name: 'AddBook', component: () => import('@/views/book/Add.vue') },
+      { path: 'editBook', name: 'EditBook', component: () => import('@/views/book/Edit.vue') }
     ]
   },
   {

@@ -12,3 +12,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true  # 开启数据库字段下划线转驼峰
