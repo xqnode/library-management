@@ -16,7 +16,7 @@ public class BaseEntity implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private LocalDate cteatetime;
+    private LocalDate createtime;
 
     /**
      * 更新时间

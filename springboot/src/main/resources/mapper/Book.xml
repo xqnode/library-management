@@ -18,14 +18,14 @@
     </select>
 
     <insert id="save">
-        insert into book(name, description, publish_date, author, publisher, category, book_no, cover)
-        values(#{name}, #{description}, #{publishDate}, #{author}, #{publisher}, #{category}, #{bookNo}, #{cover})
+        insert into book(name, description, publish_date, author, publisher, category, book_no, cover, score, nums)
+        values(#{name}, #{description}, #{publishDate}, #{author}, #{publisher}, #{category}, #{bookNo}, #{cover}, #{score}, #{nums})
     </insert>
 
     <update id="updateById">
         update book set name = #{name}, description = #{description}, publish_date = #{publishDate}, author = #{author},
-                        publisher = #{publisher}, category = #{category}, book_no = #{bookNo}, cover = #{cover},
-                        updatetime = #{updatetime} where id = #{id}
+                        publisher = #{publisher}, category = #{category}, book_no = #{bookNo}, cover = #{cover}, score = #{score},
+                        nums = #{nums}, updatetime = #{updatetime} where id = #{id}
     </update>
 
     <delete id="deleteById">
@@ -38,5 +38,8 @@
 
     <select id="getById" resultType="com.example.springboot.entity.Book">
         select * from book where id = #{id}
+    </select>
+    <select id="getByNo" resultType="com.example.springboot.entity.Book">
+        select * from book where book_no = #{bookNo}
     </select>
 </mapper>

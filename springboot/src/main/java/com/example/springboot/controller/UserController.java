@@ -23,6 +23,12 @@ public class UserController {
         return Result.success();
     }
 
+    @PostMapping("/account")
+    public Result account(@RequestBody User user) {
+        userService.handleAccount(user);
+        return Result.success();
+    }
+
     @PutMapping("/update")
     public Result update(@RequestBody User user) {
         userService.update(user);

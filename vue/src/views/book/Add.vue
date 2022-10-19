@@ -32,6 +32,12 @@
       <el-form-item label="标准码" prop="bookNo">
         <el-input v-model="form.bookNo" placeholder="请输入标准码"></el-input>
       </el-form-item>
+      <el-form-item label="借书积分" prop="cover">
+        <el-input-number v-model="form.score" :min="10" :max="30" label="所需积分"></el-input-number>
+      </el-form-item>
+      <el-form-item label="数量" prop="nums">
+        <el-input v-model="form.nums" placeholder="请输入数量"></el-input>
+      </el-form-item>
       <el-form-item label="封面" prop="cover">
         <el-input v-model="form.cover" placeholder="请输入封面"></el-input>
       </el-form-item>
@@ -49,12 +55,29 @@ import request from "@/utils/request";
 export default {
   name: 'AddBook',
   data() {
+    const checkNums = (rule, value, callback) => {
+      value = parseInt(value)
+      if (value < 0 || value >= 1000) {
+        callback(new Error('请输入大于等于0小于1000的整数'));
+      }
+      callback()
+    };
     return {
-      form: {},
+      form: {  score: 10  },
       categories: [],
       rules: {
         name: [
           { required: true, message: '请输入图书名称', trigger: 'blur'}
+        ],
+        bookNo: [
+          { required: true, message: '请输入图书标准码', trigger: 'blur'}
+        ],
+        score: [
+          { validator: checkNums, trigger: 'blur' }
+        ],
+        nums: [
+          { required: true, message: '请输入数量', trigger: 'blur'},
+          { validator: checkNums, trigger: 'blur' }
         ]
       }
     }

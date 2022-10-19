@@ -3,6 +3,7 @@ package com.example.springboot.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.beans.Transient;
 import java.util.Date;
 
 @Data
@@ -11,6 +12,8 @@ public class User {
     private String name;
     private String username;
     private Integer age;
+    private Integer account;
+    private Integer score;
     private String sex;
     private String phone;
     private String address;
