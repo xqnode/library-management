@@ -22,7 +22,7 @@
     <div style="display: flex">
       <!-- 侧边栏导航 -->
       <div style="width: 200px; min-height: calc(100vh - 62px); overflow: hidden; margin-right: 2px; background-color: white">
-        <el-menu :default-active="$route.path" router class="el-menu-demo" >
+        <el-menu :default-active="$route.path" router class="el-menu-demo" style="margin-bottom: 10px">
           <el-menu-item index="/">
             <i class="el-icon-eleme"></i>
             <span>首页</span>
@@ -66,6 +66,13 @@
             </template>
             <el-menu-item index="/addBorrow">借书添加</el-menu-item>
             <el-menu-item index="/borrowList">借书列表</el-menu-item>
+          </el-submenu>
+          <el-submenu index="retur">
+            <template slot="title">
+              <i class="el-icon-document"></i>
+              <span>还书管理</span>
+            </template>
+            <el-menu-item index="/returList">还书列表</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

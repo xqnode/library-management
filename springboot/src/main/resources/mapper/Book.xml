@@ -28,6 +28,10 @@
                         nums = #{nums}, updatetime = #{updatetime} where id = #{id}
     </update>
 
+    <update id="updateNumByNo">
+        update book set nums = nums + 1 where book_no = #{bookNo}
+    </update>
+
     <delete id="deleteById">
         delete from book where id = #{id}
     </delete>

@@ -42,6 +42,9 @@
       <el-form-item label="用户账户积分" prop="account">
         <el-input disabled v-model="form.account" ></el-input>
       </el-form-item>
+      <el-form-item label="借出的天数" prop="days">
+        <el-input-number v-model="form.days" :min="1" :max="30" label="借出的天数"></el-input-number>
+      </el-form-item>
     </el-form>
 
     <div style="text-align: center; margin-top: 30px">
@@ -76,7 +79,7 @@ export default {
     })
 
     request.get('/user/list').then(res => {
-      this.users = res.data
+      this.users = res.data.filter(v => v.status)
     })
 
     const id = this.$route.query.id

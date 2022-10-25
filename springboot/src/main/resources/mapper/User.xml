@@ -10,7 +10,7 @@
     </insert>
 
     <update id="updateById">
-        update user set name = #{name}, age = #{age}, sex = #{sex}, phone = #{phone}, address = #{address}, account = #{account},
+        update user set name = #{name}, age = #{age}, sex = #{sex}, phone = #{phone}, address = #{address}, account = #{account}, status = #{status},
         updatetime = #{updatetime} where id = #{id}
     </update>
 

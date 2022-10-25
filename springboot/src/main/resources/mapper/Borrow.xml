@@ -11,28 +11,57 @@
                 book_name like concat('%', #{bookName}, '%')
             </if>
             <if test="bookNo != null and bookNo != ''">
-                and borrow_no = #{borrowNo}
+                and book_no = #{bookNo}
             </if>
             <if test=" userName  != null and  userName  != ''">
-                user_name like concat('%', #{ userName }, '%')
+                and user_name like concat('%', #{ userName }, '%')
             </if>
         </where>
         order by id desc
     </select>
 
+    <select id="listReturByCondition" resultType="com.example.springboot.entity.Retur">
+        select * from retur
+        <where>
+            <if test="bookName != null and bookName != ''">
+                book_name like concat('%', #{bookName}, '%')
+            </if>
+            <if test="bookNo != null and bookNo != ''">
+                and book_no = #{bookNo}
+            </if>
+            <if test=" userName  != null and  userName  != ''">
+                and user_name like concat('%', #{ userName }, '%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <insert id="saveRetur">
+        insert into retur(book_name, book_no, user_no, user_name, user_phone, score, days, return_date, real_date, status)
+        values(#{bookName}, #{bookNo}, #{userNo}, #{userName}, #{userPhone}, #{score}, #{days}, #{returnDate}, #{realDate}, #{status})
+    </insert>
+
     <insert id="save">
-        insert into borrow(book_name, book_no, user_no, user_name, user_phone, score)
-        values(#{bookName}, #{bookNo}, #{userNo}, #{userName}, #{userPhone}, #{score})
+        insert into borrow(book_name, book_no, user_no, user_name, user_phone, score, days, return_date)
+        values(#{bookName}, #{bookNo}, #{userNo}, #{userName}, #{userPhone}, #{score}, #{days}, #{returnDate})
     </insert>
 
     <update id="updateById">
         update borrow set book_name = #{bookName}, book_no = #{bookNo}, user_no = #{userNo}, user_name = #{userName},
-                          user_phone = #{userPhone}, score = #{score}
+                          user_phone = #{userPhone}, score = #{score}, status=#{status}, days=#{days}, return_date = #{returnDate},
                         updatetime = #{updatetime} where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        update borrow set status = #{status} where id = #{id}
     </update>
 
     <delete id="deleteById">
         delete from borrow where id = #{id}
+    </delete>
+
+    <delete id="deleteReturById">
+        delete from retur where id = #{id}
     </delete>
 
     <select id="list" resultType="com.example.springboot.entity.Borrow">
