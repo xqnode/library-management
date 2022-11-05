@@ -22,6 +22,8 @@ http://localhost:8080/login
 
 ## 系统截图
 
+<img src="./文档/首页.png">
+
 <img src="./文档/登录.png">
 
 <img src="./文档/会员.png">
