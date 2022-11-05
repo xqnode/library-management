@@ -6,6 +6,7 @@ import com.example.springboot.entity.Retur;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IBorrowService {
     
@@ -27,4 +28,5 @@ public interface IBorrowService {
 
     void deleteReturById(Integer id);
 
+    Map<String, Object> getCountByTimeRange(String timeRange);
 }

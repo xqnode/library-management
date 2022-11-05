@@ -71,4 +71,33 @@
     <select id="getById" resultType="com.example.springboot.entity.Borrow">
         select * from borrow where id = #{id}
     </select>
+
+    <select id="getCountByTimeRange" resultType="com.example.springboot.mapper.po.BorrowReturCountPO">
+        select count(id) as count, DATE_FORMAT(createtime,'%Y-%m-%d') as date from
+        <if test="type == 1">
+            borrow
+        </if>
+        <if test="type == 2">
+            retur
+        </if>
+        where
+        <choose>
+            <when test="timeRange == 'week'">
+                createtime >=  DATE_SUB(NOW(),INTERVAL 1 WEEK)
+            </when>
+            <when test="timeRange == 'month'">
+                createtime >=  DATE_SUB(NOW(),INTERVAL 1 MONTH)
+            </when>
+            <when test="timeRange == 'month2'">
+                createtime >=  DATE_SUB(NOW(),INTERVAL 2 MONTH)
+            </when>
+            <when test="timeRange == 'month3'">
+                createtime >=  DATE_SUB(NOW(),INTERVAL 3 MONTH)
+            </when>
+            <otherwise>
+                createtime > now()
+            </otherwise>
+        </choose>
+        group by date
+    </select>
 </mapper>

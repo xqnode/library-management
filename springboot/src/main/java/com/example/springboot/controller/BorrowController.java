@@ -70,4 +70,9 @@ public class BorrowController {
         return Result.success();
     }
 
+    @GetMapping("/lineCharts/{timeRange}")
+    public Result lineCharts(@PathVariable String timeRange) {
+        return Result.success(borrowService.getCountByTimeRange(timeRange));
+    }
+
 }
