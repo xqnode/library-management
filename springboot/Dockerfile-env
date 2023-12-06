@@ -1,0 +1,11 @@
+FROM maven:3.9-amazoncorretto-8 AS mvn_pkg
+WORKDIR /usr/src/library-management
+COPY . .
+RUN mvn -B -f pom.xml dependency:resolve
+RUN mvn -B package -DskipTests
+
+FROM java:openjdk-8u111-alpine
+WORKDIR /opt/library-management
+COPY --from=mvn_pkg /usr/src/library-management/target/springboot-0.0.1-SNAPSHOT.jar .
+ENTRYPOINT ["java", "-jar", "/opt/library-management/springboot-0.0.1-SNAPSHOT.jar"]
+EXPOSE 9090
